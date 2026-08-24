@@ -475,7 +475,7 @@ let chartInstance = null;
 let allTransactions = [];
 
 // ============================================================
-//  LOAD DATA DARI APPS SCRIPT
+//  LOAD DATA DARI APPS SCRIPT (TANPA mode apapun)
 // ============================================================
 function loadDashboard() {
     document.getElementById('statsGrid').classList.add('loading');
@@ -488,7 +488,8 @@ function loadDashboard() {
         })
         .catch(error => {
             document.getElementById('statsGrid').classList.remove('loading');
-            alert('Gagal memuat dashboard: ' + error);
+            console.error('Dashboard error:', error);
+            alert('Gagal memuat dashboard: ' + error.message);
         });
 }
 
@@ -503,7 +504,8 @@ function loadTransactions() {
             updateFilterOptions(data);
         })
         .catch(error => {
-            document.getElementById('transaksiBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#b91c1c;">Gagal memuat data: ' + error + '</td></tr>';
+            console.error('Transactions error:', error);
+            document.getElementById('transaksiBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#b91c1c;">Gagal memuat data: ' + error.message + '</td></tr>';
         });
 }
 
@@ -893,7 +895,7 @@ document.getElementById('modalSave').addEventListener('click', function() {
         .catch(error => {
             document.getElementById('modalSave').disabled = false;
             document.getElementById('modalSave').innerHTML = '<i class="fas fa-save"></i> Simpan';
-            alert('Error: ' + error);
+            alert('Error: ' + error.message);
         });
 });
 
@@ -911,19 +913,9 @@ function openSettings() {
             document.getElementById('inputTarget').value = settings.target;
         })
         .catch(error => {
-            alert('Gagal memuat pengaturan: ' + error);
+            alert('Gagal memuat pengaturan: ' + error.message);
         });
 }
-
-function closeSettings() {
-    document.getElementById('modalSettings').classList.remove('active');
-}
-
-document.getElementById('settingsCancel').addEventListener('click', closeSettings);
-
-document.getElementById('modalSettings').addEventListener('click', function(e) {
-    if (e.target === this) closeSettings();
-});
 
 document.getElementById('settingsSave').addEventListener('click', function() {
     const budget = document.getElementById('inputBudget').value;
@@ -964,7 +956,7 @@ document.getElementById('settingsSave').addEventListener('click', function() {
         .catch(error => {
             document.getElementById('settingsSave').disabled = false;
             document.getElementById('settingsSave').innerHTML = '<i class="fas fa-save"></i> Simpan';
-            alert('Error: ' + error);
+            alert('Error: ' + error.message);
         });
 });
 
@@ -995,7 +987,7 @@ window.updateCategory = function(index, value) {
                 }
             })
             .catch(error => {
-                alert('Error: ' + error);
+                alert('Error: ' + error.message);
             });
     }
 };
@@ -1013,7 +1005,7 @@ window.updateKeterangan = function(index, value) {
             pemasukan: item.pemasukan
         });
         
-        fetch(API_BASE + '?' + params.toString())
+         fetch(API_BASE + '?' + params.toString())
             .then(response => response.json())
             .then(result => {
                 if (!result.success) {
@@ -1021,7 +1013,7 @@ window.updateKeterangan = function(index, value) {
                 }
             })
             .catch(error => {
-                alert('Error: ' + error);
+                alert('Error: ' + error.message);
             });
     }
 };
@@ -1221,7 +1213,7 @@ window.deleteTransaction = function(index) {
             }
         })
         .catch(error => {
-            alert('Error: ' + error);
+            alert('Error: ' + error.message);
         });
 };
 
