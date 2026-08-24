@@ -482,7 +482,7 @@ let allTransactions = [];
 function loadDashboard() {
     document.getElementById('statsGrid').classList.add('loading');
     
-    fetch(API_BASE + '?action=getDashboardData', { mode: 'no-cors' })
+    fetch(API_BASE + '?action=getDashboardData', { mode: 'cors' })
         .then(response => response.json())
         .then(data => {
             document.getElementById('statsGrid').classList.remove('loading');
@@ -497,7 +497,7 @@ function loadDashboard() {
 function loadTransactions() {
     document.getElementById('transaksiBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#94a3b8;">Memuat...</td></tr>';
     
-    fetch(API_BASE + '?action=getTransactions', { mode: 'no-cors' })
+    fetch(API_BASE + '?action=getTransactions', { mode: 'cors' })
         .then(response => response.json())
         .then(data => {
             allTransactions = data;
@@ -878,7 +878,7 @@ document.getElementById('modalSave').addEventListener('click', function() {
         pemasukan: pemasukan
     });
     
-    fetch(API_BASE + '?' + params.toString())
+    fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
         .then(response => response.json())
         .then(result => {
             document.getElementById('modalSave').disabled = false;
@@ -906,7 +906,7 @@ function openSettings() {
     const modal = document.getElementById('modalSettings');
     modal.classList.add('active');
     
-    fetch(API_BASE + '?action=getSettings')
+    fetch(API_BASE + '?action=getSettings', { mode: 'cors' })
         .then(response => response.json())
         .then(settings => {
             document.getElementById('inputBudget').value = settings.budget;
@@ -950,7 +950,7 @@ document.getElementById('settingsSave').addEventListener('click', function() {
         target: target
     });
     
-    fetch(API_BASE + '?' + params.toString())
+    fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
         .then(response => response.json())
         .then(result => {
             document.getElementById('settingsSave').disabled = false;
@@ -986,7 +986,7 @@ window.updateCategory = function(index, value) {
             pemasukan: item.pemasukan
         });
         
-        fetch(API_BASE + '?' + params.toString())
+        fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
@@ -1015,7 +1015,7 @@ window.updateKeterangan = function(index, value) {
             pemasukan: item.pemasukan
         });
         
-        fetch(API_BASE + '?' + params.toString())
+        fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
             .then(response => response.json())
             .then(result => {
                 if (!result.success) {
@@ -1102,7 +1102,7 @@ window.editTransaction = function(index) {
             pemasukan: pemasukan
         });
         
-        fetch(API_BASE + '?' + params.toString())
+        fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
             .then(response => response.json())
             .then(result => {
                 document.getElementById('modalSave').disabled = false;
@@ -1116,7 +1116,7 @@ window.editTransaction = function(index) {
                             index: index,
                             tanggal: dateObj.toISOString()
                         });
-                        fetch(API_BASE + '?' + dateParams.toString())
+                        fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
                             .then(() => {
                                 closeModal();
                                 loadTransactions();
@@ -1183,7 +1183,7 @@ function saveTransaction() {
         pemasukan: pemasukan
     });
     
-    fetch(API_BASE + '?' + params.toString())
+    fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
         .then(response => response.json())
         .then(result => {
             saveBtn.disabled = false;
@@ -1212,7 +1212,7 @@ window.deleteTransaction = function(index) {
         index: index
     });
     
-    fetch(API_BASE + '?' + params.toString())
+    fetch(API_BASE + '?' + params.toString(), { mode: 'cors' })
         .then(response => response.json())
         .then(result => {
             if (result.success) {
