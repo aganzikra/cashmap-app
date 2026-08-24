@@ -468,7 +468,7 @@
 // ============================================================
 //  APPS SCRIPT API URL - GANTI DENGAN URL WEB APP ANDA!
 // ============================================================
-const API_BASE = 'https://script.google.com/macros/s/AKfycby_cpXIxNBxu-N43k4ZIdxWLDiQui4hbaxXDHKLyM9AmZhy_0q06HUYtv8I_5Bla8-K/exec';
+const API_BASE = 'https://script.google.com/macros/s/AKfycbzOxjNRQkqfdkI7nP8igCGAQYZl_w6_eZq9mJXTbsE/exec';
 
 // ============================================================
 //  GLOBAL VARIABLES
@@ -482,7 +482,7 @@ let allTransactions = [];
 function loadDashboard() {
     document.getElementById('statsGrid').classList.add('loading');
     
-    fetch(API_BASE + '?action=getDashboardData')
+    fetch(API_BASE + '?action=getDashboardData', { mode: 'cors' })
         .then(response => response.json())
         .then(data => {
             document.getElementById('statsGrid').classList.remove('loading');
@@ -497,7 +497,7 @@ function loadDashboard() {
 function loadTransactions() {
     document.getElementById('transaksiBody').innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#94a3b8;">Memuat...</td></tr>';
     
-    fetch(API_BASE + '?action=getTransactions')
+    fetch(API_BASE + '?action=getTransactions', { mode: 'cors' })
         .then(response => response.json())
         .then(data => {
             allTransactions = data;
